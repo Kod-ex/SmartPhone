@@ -1,0 +1,177 @@
+
+import java.util.Scanner;
+public class Main {
+
+	static Scanner input = new Scanner(System.in);
+	static int password = 6969;
+	static SmartPhone phoneObject = new SmartPhone();
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		System.out.println("           .:'\r\n"
+				+ "      __ :'__\r\n"
+				+ "   .'`__`-'__``.\r\n"
+				+ "  :__________.-'\r\n"
+				+ "  :_________:\r\n"
+				+ "   :_________`-;\r\n"
+				+ "   `.__.-.__.'");
+		
+		
+		try {
+			System.out.println("\nBooting Up...");
+			Thread.sleep(2000);	
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	int passAttempt = 5;
+	
+	while(passAttempt != 0) {
+		
+		System.out.print("\nENTER 4 DIGIT PASSWORD : ");
+		int passwordInput = input.nextInt();
+		
+		boolean loop = true;
+	
+		if(passwordInput == password) {
+			
+			while(loop) {
+				
+			System.out.println("\n1 - Apps " + "\n2 - Settings " + "\n3 - Turn off");
+			System.out.print("\nChoose Operation : ");
+			int operation = input.nextInt();
+			
+			switch(operation) {
+			
+			   case 1: Apps();
+			   break;
+			   
+			   case 2: Settings();
+			   break;
+			   
+			   case 3: try {
+						System.out.println("\nTurning Off...");
+						Thread.sleep(2000);	
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			   
+			   		System.out.println("You turned off the phone.");
+			   		System.exit(0);
+			   		break;
+			   	
+			   	default: System.out.println("Invalid Choice.");
+				   
+				}
+			
+			}
+		} 
+		
+		
+		else {
+			
+			System.out.println("\nWrong Password! Try Again");
+			passAttempt--;
+		
+			if(passAttempt == 0) {
+				System.out.println("\nToo many password attempts.");
+				break;
+			}
+		}
+		
+	}
+		
+		
+		
+		
+		
+	}
+	
+	public static void Apps() {
+		System.out.println();
+		System.out.println("1 - Camera");
+		System.out.println("2 - Gallery");
+		System.out.println("3 - Music");
+		System.out.println("4 - Contacts");
+		System.out.println("5 - Clock");
+		System.out.println("6 - Calendar");
+		System.out.println("7 - Calculator");
+		
+		System.out.print("\nChoose Operaion: ");
+		int operationApps = input.nextInt();
+		
+		
+		switch (operationApps) {
+		
+		case 1: 
+			break;
+		case 2: 
+			break;
+		case 3: phoneObject.ListenMusic();
+			break;
+		case 4: phoneObject.PhoneContacts();
+			break;
+		case 5: 
+			break;
+		case 6: 
+			break;
+		case 7: 
+			System.out.print("Type first number: " );
+			double firstInput = input.nextDouble();
+		 
+			System.out.print("Type second number: " );
+			double secondInput = input.nextDouble();
+	
+			System.out.println("\n1 : Addition" + "\n2 : Substraction" + "\n3 : Multiplication"+ "\n4 : Division"+ "\n5 : Modulo");
+			System.out.print("\nChoose Operation : " );
+			int setOperation = input.nextInt();
+			
+			SmartPhone calc = new SmartPhone(firstInput,secondInput,setOperation);
+			
+			switch(setOperation) {
+			
+			case 1: calc.getSum();
+			break;
+			
+			case 2:calc.getDifference();
+			break;
+			
+			case 3:calc.getProduct();
+			break;
+			
+			case 4:calc.getQoutient();
+			break;
+			
+			case 5:calc.getModulo();
+			break;
+			
+			default: System.out.println("Invalid Operation");
+			
+			}
+			break;
+		
+			default: System.out.println("Invalid Choice");
+		
+		
+		}
+		
+		
+		
+	}
+	
+	public static void Settings() {
+		
+		System.out.println("1 - About Phone");
+		System.out.println("2 - Sound");
+		System.out.println("3 - Display");
+		System.out.println("4 - Security");
+		System.out.println("5 - Storage");
+		
+		System.out.print("Choose Operation: ");
+		int operationSettings = input.nextInt();
+		
+	}
+	
+	
+}
