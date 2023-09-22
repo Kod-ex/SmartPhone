@@ -1,0 +1,582 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+ 
+public class SmartPhone {
+	static Scanner input = new Scanner(System.in);
+	ArrayList<String> songs = new ArrayList<String>();
+	ArrayList<ArrayList<String>> playList = new ArrayList<ArrayList<String>>();
+	ArrayList<String> songsPlayList = new ArrayList<String>();
+	
+	ArrayList<String> contactNameList = new ArrayList<String>();
+	ArrayList<String> contactNumberList = new ArrayList<String>();
+	
+	int operation, phoneNumber;
+	double num1, num2;
+	
+	
+	SmartPhone(){
+		
+		
+	}
+	
+	
+	
+	public void PhoneContacts() {
+		boolean contactLoop = true;
+		
+		while(contactLoop) {
+			System.out.println("\n1 - Contact List");
+			System.out.println("2 - Add contact");
+			System.out.println("3 - Delete Contact");
+			System.out.println("4 - Exit Contacts");
+			
+			System.out.print("\nChoose Operation : ");
+			int choice = input.nextInt();
+			
+			switch(choice) {
+				
+				case 1: 
+					if(contactNumberList.size() != 0) {
+						ContactList(contactNumberList,contactNameList);
+						
+						System.out.println("\n1 - Call a contact  ");
+						System.out.println("2 - Message a contact  ");
+						System.out.println("3 - Exit  ");
+						System.out.print("Enter Operation : " );
+						int choiceContactList = input.nextInt();
+						
+						switch(choiceContactList) {
+						
+							case 1: 
+								
+								try {
+									System.out.print("\nCall a contact : ");
+									int index = input.nextInt();
+									
+									
+									System.out.println("\nCalling " + contactNameList.get(index) + "...");
+									
+										try {
+											Thread.sleep(2000);
+										} catch (InterruptedException e) {
+											e.printStackTrace();
+										}
+										System.out.println("\nYou're Calling " + contactNameList.get(index) );
+										
+										boolean calling = true;
+										
+										while(calling) {
+											System.out.println("\n1 - End Call");
+											System.out.println("2 - Mute/Unmute");
+											System.out.println("3 - Audio Mode");
+											System.out.print("Choose Operation : ");
+											int choiceCalling = input.nextInt();
+											
+											String audioMode = "Headset";
+											
+											switch(choiceCalling) {
+											
+												case 1: System.out.println("\nCall Ended."); calling = false;
+													break;
+													
+												case 2: 
+													System.out.print("\nSet mic settings :");
+													String setMute = input.next();
+												 	
+													if(setMute.equalsIgnoreCase("mute")) {
+														System.out.println("\nYour mic has been muted.");
+													} else if (setMute.equalsIgnoreCase("unmute")) {
+														System.out.println("\nYour mic has been muted.");
+													} else {
+														System.out.println("Invalid Input");
+													}
+													break;
+													
+												case 3: 
+													System.out.println("\nAudio has been set to " + audioMode + " Mode");
+													
+													System.out.println("\n1 - Headset");
+													System.out.println("2 - Speaker");
+													System.out.print("Set Audio Mode: ");
+													int setAudio = input.nextInt();
+													
+													if(setAudio == 1 ) {
+														audioMode = "Headset";
+														System.out.println("\nAudio has been set to " + audioMode + " Mode");
+													} else if(setAudio == 2 ) {
+														audioMode = "Speaker";
+														System.out.println("\nAudioCall has been set to " + audioMode + " Mode");
+													}else {
+														System.out.println("\nInvalid Input");
+													}
+													
+													
+													
+													
+											}
+											
+										}
+								} catch(Exception e) {
+									
+									System.out.println("\nInvalid Contact.");
+								} break;
+								
+							case 2: 
+								
+								System.out.println("\nNew Conversation ");
+								ContactList(contactNumberList,contactNameList);
+								
+								System.out.print("\nTo: ");
+								int index = input.nextInt();
+								
+								
+								try {
+									
+									String recipient = contactNameList.get(index);
+									String recipientNum = contactNumberList.get(index);
+									
+									boolean textLoop = true;
+									
+									while(textLoop) {
+										
+										input.nextLine();
+										System.out.print("\nType a message : ");
+										String message = input.nextLine();
+										
+										System.out.println("\nMessage : "+ message + "\nSent to : " + recipient + " (" + recipientNum +") " );
+										
+										System.out.println("\n1 - Continue messaging");
+										System.out.println("2 - Exit");
+										System.out.print("Choose Operation : ");
+										int operationText = input.nextInt();
+										
+										if(operationText == 1) {
+											textLoop = true;
+										} else if(operationText == 2) {
+											textLoop = false;
+										} else {
+											System.out.println("\nInvalid Input"); break;
+										}
+									}
+									
+									
+								}catch(Exception e) {
+									
+									System.out.println("\nInvalid Contact.");
+								}break;
+								
+							case 3: System.out.println("\nThe contact list has been closed.");
+								break;
+							
+							default: System.out.println("\nInvalid Input.");
+								
+								
+							
+						}
+						
+					}else {
+						System.out.println("\nNo Contacts. ");
+					}break;
+					
+				case 2: 
+					System.out.print("\nEnter Name : ");
+					String contactName = input.next();
+					
+					System.out.print("Enter Number : ");
+					String contactNumber = input.next();
+					
+					char[] charNumber = contactNumber.toCharArray();
+
+					if(contactNumber.length() == 11 && charNumber[0] == '0' && charNumber[1] == '9'  ) {
+						
+						contactNameList.add(contactName);
+						contactNumberList.add(contactNumber);
+						
+						System.out.println("\nContact has been added.");
+					} else {
+						System.out.println("\nInvalid Number.");
+					}
+					
+					
+					
+					break;
+				
+				case 3:
+					
+					if(contactNumberList.size() != 0) {
+						ContactList(contactNumberList,contactNameList);
+						
+						System.out.print("\nWhich contact you want to delete? : ");
+						int index = input.nextInt();
+						
+						
+						try {
+							String deletedContactNumber = contactNumberList.remove(index);
+							String deletedContactName = contactNameList.remove(index);
+							System.out.println("\n" + deletedContactName + " - " + deletedContactNumber + " is been deleted.");
+							
+						} catch(Exception e) {
+							
+							System.out.println("\nInvalid Contact.");
+						}
+							
+					} else {
+						System.out.println("No Contacts.");
+					}
+					
+					
+					break;
+					
+				case 4: System.out.println("You exited contact app."); contactLoop = false;
+					break;
+				
+				default: System.out.println("Invalid Input");
+			}
+		}
+		
+		
+	}
+	
+	public static void ContactList(ArrayList<String> contactNumber, ArrayList<String> contactName) {
+		
+		System.out.println("\nContact List :");
+		for(int index = 0; index < contactNumber.size(); index++) {
+			
+			System.out.println("Contact " + index + ": " + contactNumber.get(index) + " - " + contactName.get(index));
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void ListenMusic () {
+		
+		
+		boolean loop = true;
+		
+		while (loop) {
+			
+			System.out.println("\n1 - Choose a song");
+			System.out.println("2 - Create Playlist");
+			System.out.println("3 - Open Playlist");
+			System.out.println("4 - Add/Delete a song");
+			System.out.println("5 - Exit App");
+			
+			System.out.print("\nChoose Operation : ");
+			int choice = input.nextInt();
+			
+			switch(choice) {
+				case 1: 
+					
+					if(songs.size() == 0) {
+						System.out.println("No songs available.");
+					}else {
+						songList(songs);
+						
+						System.out.print("Choose a song : ");
+					    int indexSong = input.nextInt();
+					    
+					    chooseSong(indexSong,songs);
+					}
+					
+				    
+				    break;
+				    
+				case 2: 
+					
+					System.out.println("\n1 - Create Playlist");
+					System.out.println("2 - Delete Playlist");
+					System.out.println("3 - Exit");
+					
+					
+					
+					System.out.print("\nChoose Operation : ");
+					int choicePlayList = input.nextInt();
+					
+					switch(choicePlayList) {
+					
+					case 1: 
+						boolean loopAdd = true, songAdd = true;
+						if(songs.size() == 0) {
+							System.out.println("No songs available to add.");
+						}
+						
+						else {
+							
+							while(loopAdd) {
+								System.out.print("\nAdd playlist? Y/N : ");
+								String addChoice = input.next();
+								
+								if(addChoice.equalsIgnoreCase("y")) {
+									
+									
+									
+									while(songAdd) {
+										
+										songList(songs);
+										
+										System.out.print("\nAdd song to the playlist : ");
+										int index = input.nextInt();
+											
+										try {
+											songsPlayList.add(songs.get(index));
+											}
+										catch(Exception e) {
+											System.out.println("\nInvalid Song");
+										}
+										
+							
+										System.out.print("\nAdd another song to the current playlist? Y/N : ");
+										String addSong = input.next();
+										
+										if(addSong.equalsIgnoreCase("y")) {
+											songAdd = true;
+										} else if(addSong.equalsIgnoreCase("n")) {
+											break;
+										}else {
+											System.out.println("\nInvalid Input"); break;
+										}
+									}
+									
+									
+									playList.add(songsPlayList);
+									
+								}else if(addChoice.equalsIgnoreCase("n")) {
+									loopAdd = false;
+								}else {
+									System.out.println("Invalid Input"); 
+								}
+							}
+						}
+						
+						
+						break;
+						
+					case 2:
+						
+						if(playList.size() != 0) {
+							
+							playList(playList);
+							
+							System.out.print("\nWhat playlist you want to delete: ");
+							int index = input.nextInt();
+							
+							try {
+								playList.remove(index);
+								
+								System.out.println("\nPlay List is deleted.");
+								
+							}catch(Exception e) {
+								System.out.println("\nInvalid Playlist.");
+							}
+							
+						}
+						 else {
+							System.out.println("\nYou don't have a play list.");
+						}
+						
+						break;
+					
+					case 3: break;
+						
+					default: System.out.println("\nInvalid Input.");
+					}
+			
+					break;
+				
+				case 3: 
+					
+					if(playList.size() != 0) {
+						
+						playList(playList);
+						
+					}else {
+						System.out.println("You don't have a play list.");
+					}
+					break;
+					
+				
+				case 4: 
+					System.out.println("1 - Add");
+					System.out.println("2 - Delete");
+					System.out.println("3 - Exit");
+					
+					System.out.print("\nChoose Operation: ");
+					int operation = input.nextInt();
+					
+					switch(operation) {
+						case 1:
+							addSong(songs);
+							break;
+						
+						case 2: 
+							
+							songList(songs);
+							
+							System.out.print("\nWhat song you want to delete? : ");
+							int songIndex = input.nextInt();
+							
+								if (songIndex >= 0 && songIndex < songs.size()) {
+									
+					                String deletedSong = songs.remove(songIndex);
+					                
+					                System.out.println("Song " + deletedSong + "' is deleted");
+					            }
+								
+								else {
+					                System.out.println("Invalid index. No song deleted.");
+					            }
+						
+							break;
+						
+						case 3: break;
+						
+						default: System.out.println("Invalid Input");
+						
+					} 
+					break;
+					
+				
+				case 5: 
+					System.out.println("Closed the music app."); loop = false;
+					break;
+				
+			}
+		}
+		
+		
+	}
+	
+	public static void chooseSong(int index, ArrayList<String> songs ) {
+		  
+			boolean playing = true;
+		    
+		    System.out.println("\n" + songs.get(index) + " is playing.");
+	    	
+	    	System.out.println("\n1 - Pause");
+	    	System.out.println("2 - Resume");
+	    	System.out.println("3 - Exit");
+		   
+		    while(playing) {
+		    	
+		    	System.out.print("\nChoose Operation : ");
+		    	int choiceSong = input.nextInt();
+		    	
+		    	switch(choiceSong) {
+		    		case 1: System.out.println(songs.get(index) + " is paused.");
+		    		break;
+		    		
+		    		case 2: System.out.println(songs.get(index) + " is playing."); 
+		    		break;
+		    		
+		    		case 3: System.out.println(songs.get(index) + " stopped playing."); playing = false;
+		    		break;
+		    		
+		    		default: System.out.println("Invalid Choice.");
+		    		
+		    		
+		    	}
+		    } 
+		
+	}
+	
+	public static void addSong(ArrayList<String> songs) {
+		
+		input.nextLine();
+		
+		System.out.print("\nAdd a song : ");
+		String addSong = input.nextLine();
+		
+		System.out.print("\nAdd Artist : ");
+		String songArtist = input.nextLine();
+		
+		songs.add(addSong + " - " + songArtist);
+	}
+	
+	public static void songList(ArrayList<String> songs) {
+		
+		System.out.println("\nList of Songs");
+		for(int index = 0; index < songs.size(); index++) {
+				System.out.println(index + ": " + songs.get(index));
+		}
+	}
+	
+	public static void playList(ArrayList<ArrayList<String>> playList) {
+		
+		System.out.println("\nYour Play lists:");
+		for(int index = 0; index < playList.size(); index++) {
+			System.out.println("\nPlay list " + index + ": " );
+			System.out.println("Songs: " + " \n" + playList.get(index));
+		}
+	}
+	
+	
+	
+	
+	
+	//parameterized constructor for calculator.
+	SmartPhone(double num1 , double num2, int operation){
+		
+		this.num1 = num1;
+		this.num2 = num2;
+		this.operation = operation;
+		
+	}
+		
+		void getSum(){
+			
+			System.out.println("\nThe sum is: " + (num1 + num2));
+			
+			
+		}
+		
+		
+		void getDifference() {
+
+			System.out.println("\nThe difference is: " + (num1 - num2));
+			
+			
+		}
+		
+		void getProduct() {
+
+			System.out.println("\nThe product is: " + (num1 * num2));
+			
+			
+		}
+		
+		void getQoutient() {
+			
+			if(num2 == 0) {
+				System.out.println("ERROR");
+			} else {
+				System.out.println("\nThe quotient is: " + (num1 / num2));
+			}
+			
+		}
+		
+		void getModulo() {
+
+			System.out.println("\nThe modulo is: " + (num1 % num2));
+			
+			
+	}
+	
+	
+	
+	
+	
+}
+	
